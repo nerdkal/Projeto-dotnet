@@ -2,27 +2,33 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      dotnet: 3.1
+    commands:
+      - echo Verificando versoes do dotnet...
+      - dotnet --list-sdks
   pre_build:
     commands:
-      - echo === login ao ECR...
+      - echo Fazendo login no Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
   build:
     commands:
-      - echo === Compilando  ASP.NET...
+      - echo Iniciando o Build em `date`
+      - echo Compilando o projeto .NET...
       - dotnet publish -c Release -o out/
-      - echo === Gerando o Dockerfile em tempo real...
+      - echo Criando Dockerfile...
       - |
-        printf "FROM mcr.microsoft.com/dotnet/core/aspnet:3.1\nWORKDIR /app\nCOPY out/ .\nEXPOSE 80\nENTRYPOINT [\"dotnet\", \"MeuSite.dll\"]" > Dockerfile
-      - echo === Construindo a imagem Docker...
+        cat <<EOF > Dockerfile
+        FROM mcr.microsoft.com/dotnet/aspnet:6.0
+        WORKDIR /app
+        COPY out/ .
+        EXPOSE 80
+        ENTRYPOINT ["dotnet", "MeuSite.dll"]
+        EOF
       - docker build -t $REPOSITORY_URI:latest .
   post_build:
     commands:
-      - echo === Enviando ao ECR...
+      - echo Build finalizado em `date`
       - docker push $REPOSITORY_URI:latest
-      - echo === Criando arquivo de definicao para o ECS...
       - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$REPOSITORY_URI:latest" > imagedefinitions.json
 
 artifacts:
