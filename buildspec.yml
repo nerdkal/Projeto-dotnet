@@ -1,10 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Verificando versoes do dotnet...
-      - dotnet --list-sdks
   pre_build:
     commands:
       - echo Fazendo login no Amazon ECR...
@@ -12,10 +8,9 @@ phases:
       - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
   build:
     commands:
-      - echo Iniciando o Build em `date`
-      - echo Compilando o projeto .NET...
-      - dotnet publish -c Release -o out/
-      - echo Criando Dockerfile...
+      - echo Compilando o projeto MeuSite...
+      - dotnet publish MeuSite.csproj -c Release -o out/
+      - echo Criando Dockerfile dinâmico...
       - |
         cat <<EOF > Dockerfile
         FROM mcr.microsoft.com/dotnet/aspnet:6.0
@@ -24,10 +19,11 @@ phases:
         EXPOSE 80
         ENTRYPOINT ["dotnet", "MeuSite.dll"]
         EOF
+      - echo Construindo imagem Docker...
       - docker build -t $REPOSITORY_URI:latest .
   post_build:
     commands:
-      - echo Build finalizado em `date`
+      - echo Enviando imagem para o repositório...
       - docker push $REPOSITORY_URI:latest
       - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$REPOSITORY_URI:latest" > imagedefinitions.json
 
