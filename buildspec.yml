@@ -24,8 +24,7 @@ phases:
   post_build:
     commands:
       - echo Enviando imagem para o ECR...
-      - docker push $REPOSITORY_URI:latest
-      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_NAME" "$REPOSITORY_URI:latest" > imagedefinitions.json
-
+      - docker push $REPOSITORY_URI:latest      
+      - printf '[{"name":"meu-site-container","imageUri":"%s"}]' "$REPOSITORY_URI:latest" > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
