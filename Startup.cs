@@ -34,7 +34,7 @@ namespace MEUSITE
                 <style>
                     body {
                         background-color: #2d3436; /* Cor de fundo (cinza escuro) */
-                        color: #fab1a0;           /* Cor do texto (salmão claro) */
+                        color: #yellow;           /* Cor do texto (salmão claro) */
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -49,7 +49,7 @@ namespace MEUSITE
                 </style>
             </head>
             <body>
-                <h1>Bem-vindo ao MeuSite Projeto2!!!</h1>
+                <h1>Bem-vindo ao MeuSite: Projeto 2!!!</h1>
             </body>
         </html>";
 
