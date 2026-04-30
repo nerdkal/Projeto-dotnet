@@ -34,7 +34,7 @@ namespace MEUSITE
                 <style>
                     body {
                         background-color: #2d3436; /* Cor de fundo (cinza escuro) */
-                        color: #yellow;           /* Cor do texto (salmão claro) */
+                        color: yellow;           /* Cor do texto (salmão claro) */
                         display: flex;
                         justify-content: center;
                         align-items: center;
