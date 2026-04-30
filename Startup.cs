@@ -26,7 +26,34 @@ namespace MEUSITE
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Bem-vindo ao MeuSite Projeto2!!!");
+                  context.Response.ContentType = "text/html; charset=utf-8";
+
+    var html = @"
+        <html>
+            <head>
+                <style>
+                    body {
+                        background-color: #2d3436; /* Cor de fundo (cinza escuro) */
+                        color: #fab1a0;           /* Cor do texto (salmão claro) */
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 {
+                        font-size: 4rem;          /* Texto bem grande */
+                        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Bem-vindo ao MeuSite Projeto2!!!</h1>
+            </body>
+        </html>";
+
+    await context.Response.WriteAsync(html);
                 });
             });
         }
