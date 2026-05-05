@@ -1,9 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      dotnet: 3.1
   pre_build:
     commands:
       - echo Fazendo login no Amazon ECR...
@@ -12,7 +9,6 @@ phases:
   build:
     commands:
       - echo Compilando o projeto MeuSite 3.1...
-      # O comando abaixo procura o csproj na raiz. Se estiver em subpasta, use: dotnet publish **/MeuSite.csproj
       - dotnet publish MeuSite.csproj -c Release -o out/
       - echo Criando Dockerfile...
       - |
