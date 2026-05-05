@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,23 +26,25 @@ namespace MEUSITE
             {
                 endpoints.MapGet("/", async context =>
                 {
-                  context.Response.ContentType = "text/html; charset=utf-8";
+                    context.Response.ContentType = "text/html; charset=utf-8";
 
-    var html = @"
-        <!DOCTYPE html>
-<html lang="pt-BR">
+                    // Note que as aspas internas do HTML agora estão duplicadas ("") 
+                    // para que o C# as entenda como caracteres de texto.
+                    var html = @"
+<!DOCTYPE html>
+<html lang=""pt-BR"">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
     <title>Pipeline-Projeto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src=""https://cdn.tailwindcss.com""></script>
+    <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
         body {
-            font-family: 'Inter', "Segoe UI", Arial, sans-serif;
+            font-family: 'Inter', ""Segoe UI"", Arial, sans-serif;
             background: #0b1420;
             color: #e6edf3;
             min-height: 100vh;
@@ -62,7 +63,6 @@ namespace MEUSITE
             width: 100%;
         }
 
-        /* Box Style */
         .stage-box {
             width: 400px;
             background: #161b22;
@@ -80,7 +80,7 @@ namespace MEUSITE
         }
 
         .stage-box::before {
-            content: "";
+            content: """";
             position: absolute;
             top: 0;
             left: 0;
@@ -109,7 +109,7 @@ namespace MEUSITE
         }
 
         .check::after {
-            content: "✓";
+            content: ""✓"";
             position: absolute;
             color: #fff;
             font-size: 12px;
@@ -165,7 +165,6 @@ namespace MEUSITE
             color: #8b949e;
         }
 
-        /* Arrow */
         .arrow {
             width: 60px;
             height: 3px;
@@ -175,7 +174,7 @@ namespace MEUSITE
         }
 
         .arrow::after {
-            content: "";
+            content: """";
             position: absolute;
             right: -10px;
             top: -6px;
@@ -207,104 +206,60 @@ namespace MEUSITE
     </style>
 </head>
 <body>
-
-    <div class="pipeline-container">
-        <!-- Top Header -->
-        <div class="top-header">
-            <div class="flex items-center gap-4">
-                <h1 class="text-3xl font-semibold">Pipeline-Projeto</h1>
-                <div class="flex items-center gap-2 text-emerald-400 text-sm">
-                    <span class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
+    <div class=""pipeline-container"">
+        <div class=""top-header"">
+            <div class=""flex items-center gap-4"">
+                <h1 class=""text-3xl font-semibold"">Pipeline-Projeto</h1>
+                <div class=""flex items-center gap-2 text-emerald-400 text-sm"">
+                    <span class=""w-3 h-3 bg-emerald-400 rounded-full animate-pulse""></span>
                     Concluído com sucesso
                 </div>
             </div>
-            
-            <div class="flex gap-3">
-                <button id="rebuildBtn" 
-                        class="px-5 py-2 bg-gray-800 hover:bg-gray-700 rounded-xl text-sm flex items-center gap-2 transition">
-                    <i class="fas fa-redo"></i> 
-                    Rebuild
+            <div class=""flex gap-3"">
+                <button id=""rebuildBtn"" class=""px-5 py-2 bg-gray-800 hover:bg-gray-700 rounded-xl text-sm flex items-center gap-2 transition"">
+                    <i class=""fas fa-redo""></i> Rebuild
                 </button>
-                <button class="px-6 py-2 bg-red-600 hover:bg-red-500 rounded-xl text-sm flex items-center gap-2 transition">
-                    <i class="fas fa-stop"></i> 
-                    Stop Build
+                <button class=""px-6 py-2 bg-red-600 hover:bg-red-500 rounded-xl text-sm flex items-center gap-2 transition"">
+                    <i class=""fas fa-stop""></i> Stop Build
                 </button>
             </div>
         </div>
 
-        <!-- Pipeline -->
-        <div class="flex items-center justify-center gap-8">
-            
-            <!-- SOURCE -->
-            <div id="source" class="stage-box">
-                <div class="header">
-                    <span class="check"></span>
-                    <span>Source</span>
-                </div>
-                <div class="pipeline-id">
-                    a6b37c6c-a52f-4344-80db-fe2e96d20f42
-                </div>
-                <div class="status">All actions succeeded.</div>
-                
-                <div class="inner">
-                    <div class="label">
-                        <span class="check"></span>
-                        Source
-                    </div>
-                    <div class="service">GitHub (via GitHub App)</div>
-                    <div class="time">9 minutes ago</div>
+        <div class=""flex items-center justify-center gap-8"">
+            <div id=""source"" class=""stage-box"">
+                <div class=""header""><span class=""check""></span><span>Source</span></div>
+                <div class=""pipeline-id"">a6b37c6c-a52f-4344-80db-fe2e96d20f42</div>
+                <div class=""status"">All actions succeeded.</div>
+                <div class=""inner"">
+                    <div class=""label""><span class=""check""></span>Source</div>
+                    <div class=""service"">GitHub (via GitHub App)</div>
+                    <div class=""time"">9 minutes ago</div>
                 </div>
             </div>
-
-            <div class="arrow"></div>
-
-            <!-- BUILD -->
-            <div id="build" class="stage-box">
-                <div class="header">
-                    <span class="check"></span>
-                    <span>Build</span>
-                </div>
-                <div class="pipeline-id">
-                    a6b37c6c-a52f-4344-80db-fe2e96d20f42
-                </div>
-                <div class="status">All actions succeeded.</div>
-                
-                <div class="inner">
-                    <div class="label">
-                        <span class="check"></span>
-                        Build
-                    </div>
-                    <div class="service">AWS CodeBuild</div>
-                    <div class="time">8 minutes ago</div>
+            <div class=""arrow""></div>
+            <div id=""build"" class=""stage-box"">
+                <div class=""header""><span class=""check""></span><span>Build</span></div>
+                <div class=""pipeline-id"">a6b37c6c-a52f-4344-80db-fe2e96d20f42</div>
+                <div class=""status"">All actions succeeded.</div>
+                <div class=""inner"">
+                    <div class=""label""><span class=""check""></span>Build</div>
+                    <div class=""service"">AWS CodeBuild</div>
+                    <div class=""time"">8 minutes ago</div>
                 </div>
             </div>
-
-            <div class="arrow"></div>
-
-            <!-- DEPLOY -->
-            <div id="deploy" class="stage-box">
-                <div class="header">
-                    <span class="check"></span>
-                    <span>Deploy</span>
-                </div>
-                <div class="pipeline-id">
-                    a6b37c6c-a52f-4344-80db-fe2e96d20f42
-                </div>
-                <div class="status">All actions succeeded.</div>
-                
-                <div class="inner">
-                    <div class="label">
-                        <span class="check"></span>
-                        Deploy
-                    </div>
-                    <div class="service">Amazon ECS</div>
-                    <div class="time">5 minutes ago</div>
+            <div class=""arrow""></div>
+            <div id=""deploy"" class=""stage-box"">
+                <div class=""header""><span class=""check""></span><span>Deploy</span></div>
+                <div class=""pipeline-id"">a6b37c6c-a52f-4344-80db-fe2e96d20f42</div>
+                <div class=""status"">All actions succeeded.</div>
+                <div class=""inner"">
+                    <div class=""label""><span class=""check""></span>Deploy</div>
+                    <div class=""service"">Amazon ECS</div>
+                    <div class=""time"">5 minutes ago</div>
                 </div>
             </div>
         </div>
-
-        <!-- Texto de boas-vindas -->
-        <h1 class="welcome">Bem-vindo ao meu projeto Pipeline</h1>
+        <h1 class=""welcome"">Bem-vindo ao meu projeto Pipeline</h1>
     </div>
 
     <script>
@@ -314,29 +269,19 @@ namespace MEUSITE
         const rebuildBtn = document.getElementById('rebuildBtn');
 
         function animatePipeline() {
-            // Reset animation
-            [source, build, deploy].forEach(card => {
-                card.classList.remove('visible');
-            });
-
-            // Start animation sequence
+            [source, build, deploy].forEach(card => card.classList.remove('visible'));
             setTimeout(() => source.classList.add('visible'), 100);
             setTimeout(() => build.classList.add('visible'),  2600);
             setTimeout(() => deploy.classList.add('visible'), 5200);
         }
 
-        // Primeiro carregamento
         window.onload = animatePipeline;
-
-        // Clique no botão Rebuild
-        rebuildBtn.addEventListener('click', () => {
-            animatePipeline();
-        });
+        rebuildBtn.addEventListener('click', animatePipeline);
     </script>
 </body>
 </html>";
 
-    await context.Response.WriteAsync(html);
+                    await context.Response.WriteAsync(html);
                 });
             });
         }
